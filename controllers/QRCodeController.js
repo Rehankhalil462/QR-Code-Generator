@@ -1,9 +1,23 @@
-import qr, { image } from "qr-image";
+import qr from "qr-image";
 
 export const createQR = (req, res) => {
   const supportedFormats = ["png", "svg", "eps", "pdf"];
   const supportedResponseTypes = ["b64", "media"];
 
+  if (
+    req?.query?.qrFormat &&
+    !supportedFormats.includes(req?.query?.qrFormat)
+  ) {
+    res.status(400).json({ error: "Not Supported Format." });
+    return;
+  }
+  if (
+    req?.query?.responseType &&
+    !supportedResponseTypes.includes(req?.query?.responseType)
+  ) {
+    res.status(400).json({ error: "Not Supported Response Type." });
+    return;
+  }
   const data = req.query.data;
   let responseType = supportedResponseTypes.find(
     (type) => type == req.query.responseType
@@ -15,6 +29,7 @@ export const createQR = (req, res) => {
   if (!imageFormat) {
     imageFormat = "png";
   }
+
   //qr code generation for texts or urls
   if (data) {
     if (data !== "") {
@@ -23,8 +38,22 @@ export const createQR = (req, res) => {
           const qr_svg = qr.image(data, { type: imageFormat });
 
           if (responseType == "media") {
-            res.type(`application/${imageFormat}`);
-            qr_svg.pipe(res);
+            if (imageFormat !== "pdf") {
+              res.setHeader(
+                "Content-Disposition",
+                `attachment; filename=qr.${imageFormat}`
+              );
+              res.type(`image/${imageFormat}`);
+              qr_svg.pipe(res);
+            } else {
+              res.setHeader(
+                "Content-Disposition",
+                "attachment; filename=qr.pdf"
+              );
+
+              res.type(`application/${imageFormat}`);
+              qr_svg.pipe(res);
+            }
           } else {
             const chunks = [];
             qr_svg.on("data", (chunk) => {
