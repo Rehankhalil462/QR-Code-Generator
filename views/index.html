@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>QR Code Generation Microservice</title>
+
+    <link href="/public/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <h1>QR Code Generation Microservice</h1>
+    <main>
+      <section>
+        <form class="form" action="qr" method="GET">
+          <fieldset>
+            <legend>QR Generation</legend>
+            <label for="data_input">Data :</label>
+            <input
+              id="data_input"
+              type="text"
+              name="data"
+              placeholder="Any data like text, urls etc"
+            />
+            <div>
+              <label for="image_format">QR Format :</label>
+              <input id="png" type="radio" name="qrFormat" value="png" />
+              <label for="png">Png</label>
+              <input id="pdf" type="radio" name="qrFormat" value="pdf" />
+              <label for="pdf">Pdf</label>
+              <input id="svg" type="radio" name="qrFormat" value="svg" />
+              <label for="svg">Svg</label>
+              <input id="eps" type="radio" name="qrFormat" value="eps" />
+              <label for="eps">Eps</label>
+            </div>
+            <div>
+              <label for="response_input">Response Type :</label>
+              <input
+                id="media"
+                title="Media"
+                type="radio"
+                name="responseType"
+                value="media"
+              />
+              <label for="media">Media</label>
+              <input id="b64" type="radio" name="responseType" value="b64" />
+              <label for="b64">Base 64</label>
+            </div>
+
+            <input style="margin-top: 10px" type="submit" value="Generate QR" />
+          </fieldset>
+        </form>
+      </section>
+
+      <section>
+        <fieldset class="form">
+          <legend>Instructions</legend>
+          <h4 style="text-decoration: underline">Data</h4>
+          <label
+            >Data is <strong> required </strong> . It can be any text , url
+            etc</label
+          >
+          <hr />
+          <h4 style="text-decoration: underline">QR Format</h4>
+          <label
+            >QR Format is <strong> optional </strong> . ( Default : png )</label
+          >
+          <hr />
+          <h4 style="text-decoration: underline">Response Type</h4>
+          <label
+          >Response Type is <strong> optional </strong> . ( Default : Base 64 )</label
+        >
+        <hr />
+        <h4 style="text-decoration: underline">For API Documentation</h4>
+        <label
+          >Please refer to <a href="https://github.com/Rehankhalil462/QR-Code-Generator">Github Repository </a> </label
+        >
+        </fieldset>
+      </section>
+    </main>
+    <footer>
+      <p>By <a href="https://github.com/Rehankhalil462">Rehan Khalil</a></p>
+    </footer>
+  </body>
+</html>
