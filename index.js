@@ -14,11 +14,11 @@ app.use(cors());
 app.use("/public", express.static(`${process.cwd()}/public`));
 
 app.get("/", function (req, res) {
-  res.sendFile(process.cwd() + "/views/index.html");
+  res.status(200).sendFile(process.cwd() + "/views/index.html");
 });
 
 app.get("/heartbeat", (req, res) => {
-  res.send("QR Code Generation Microservice is working.");
+  res.status(200).send("QR Code Generation Microservice is working.");
 });
 
 app.get("/qr", createQR);
